@@ -4,6 +4,9 @@ Una web app per la gestione dei task in stile **scrivania digitale**, sviluppata
 
 L’app consente di creare, modificare, filtrare e salvare i task localmente, con supporto a **dark mode**, **UI responsive** e **modals Bootstrap** per una migliore user experience.
 
+# Live website
+https://simonesbds.github.io/task-manager/
+
 ---
 
 ## Features
@@ -56,3 +59,5 @@ task-manager/
 - Bootstrap Modals via JavaScript
 
 ---
+
+![Preview](image.png)
