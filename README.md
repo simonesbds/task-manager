@@ -1,37 +1,39 @@
-# Task Manager
+# Desk — Task Manager
 
-A task management web app with a **digital desk** look, built with **HTML, Bootstrap 5 and vanilla JavaScript**.
+A task manager inspired by modern productivity apps, built with **HTML, CSS and vanilla JavaScript** (Bootstrap only for the modals).
 
-The app lets you create, edit, filter and save tasks locally, with support for **dark mode**, a **responsive UI** and **Bootstrap modals** for a smoother user experience.
+Create, edit and complete tasks, group them by priority, track your progress and move around with keyboard shortcuts. Everything is saved locally in the browser, with a persistent light/dark theme.
 
 ## Live website
 https://simonesbds.github.io/task-manager/
+
+![Preview](image.png)
 
 ---
 
 ## Features
 
-- Create tasks
-- Edit tasks through a Bootstrap modal
-- Delete tasks with a confirmation modal
+- Create, edit (modal) and delete (confirmation modal) tasks
 - Mark tasks as completed
+- Tasks grouped by priority (High / Medium / Low)
+- Sidebar views: All / Active / Completed, each with a live counter
+- Progress bar showing how many tasks are done
 - Text search
-- Filters: All / Active / Completed
-- Priority levels (Low / Medium / High)
-- Persistent dark mode
+- Keyboard shortcuts: <kbd>N</kbd> new task, <kbd>/</kbd> search, <kbd>Esc</kbd> leave the field
+- Persistent light/dark theme
 - Data saved in localStorage
-- Responsive, mobile-first layout (Bootstrap)
-- Custom orange theme
+- Responsive layout: the sidebar becomes a top bar on small screens
+- Respects the user's "reduce motion" setting
 
 ---
 
 ## Tech Stack
 
 - HTML5
-- CSS3
-- Bootstrap 5
+- CSS3 (custom properties for theming, CSS Grid, Flexbox)
 - JavaScript (vanilla)
 - LocalStorage API
+- Bootstrap 5 (modals only)
 
 ---
 
@@ -39,10 +41,10 @@ https://simonesbds.github.io/task-manager/
 
 ```
 task-manager/
-├── index.html
-├── global.css
-├── app.js
-├── image.png
+├── index.html    # layout: sidebar, composer, list, modals
+├── global.css    # design tokens, light/dark themes, components
+├── app.js        # state, CRUD, rendering, stats, shortcuts
+├── image.png     # preview
 ├── LICENSE
 └── README.md
 ```
@@ -52,17 +54,14 @@ task-manager/
 ## JavaScript Concepts Used
 
 - DOM manipulation
-- Event handling
+- Event handling (including global keyboard shortcuts)
 - Array methods (`filter`, `find`, `forEach`)
 - Application state management
 - LocalStorage
 - Template literals
-- Conditional rendering
+- Derived data (counters and progress computed from the task list)
+- `Intl` date formatting with `toLocaleDateString`
 - Bootstrap modals via JavaScript
-
----
-
-![Preview](image.png)
 
 ---
 

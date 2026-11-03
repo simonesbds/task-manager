@@ -22,6 +22,36 @@ const confirmDeleteBtn = document.querySelector("#confirm-delete-btn");
 const editModal = new bootstrap.Modal("#editModal");
 const deleteModal = new bootstrap.Modal("#deleteModal");
 
+// UI elements added with the redesign
+const viewTitle = document.querySelector("#view-title");
+const todayLabel = document.querySelector("#today");
+const countAll = document.querySelector("#count-all");
+const countActive = document.querySelector("#count-active");
+const countCompleted = document.querySelector("#count-completed");
+const progressFill = document.querySelector("#progress-fill");
+const progressPercent = document.querySelector("#progress-percent");
+const progressLabel = document.querySelector("#progress-label");
+
+const VIEW_TITLES = {
+  all: "All tasks",
+  active: "Active",
+  completed: "Completed",
+};
+
+// Tasks are shown grouped in this order
+const PRIORITIES = [
+  { value: "high", label: "High priority" },
+  { value: "medium", label: "Medium priority" },
+  { value: "low", label: "Low priority" },
+];
+
+// Today's date in the header, e.g. "Wednesday, November 4"
+todayLabel.textContent = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+});
+
 if (theme === "dark") {
   body.classList.add("dark");
 }
@@ -139,27 +169,84 @@ function renderTasks() {
     );
   }
 
-  counter.textContent = `${filtered.length} task`;
+  counter.textContent = filtered.length;
+  viewTitle.textContent = VIEW_TITLES[currentFilter];
+  updateStats();
 
-  filtered.forEach((task) => {
-    const li = document.createElement("li");
-    li.className = `list-group-item task-item d-flex justify-content-between align-items-center priority-${
-      task.priority
-    } ${task.completed ? "completed" : ""}`;
+  // One group per priority: a header row, then its tasks
+  PRIORITIES.forEach((priority) => {
+    const group = filtered.filter((t) => t.priority === priority.value);
+    if (group.length === 0) return;
 
-    li.innerHTML = `
-      <div>
-        <strong>${task.text}</strong>
-        <small class="d-block text-muted">Priorità: ${task.priority}</small>
-      </div>
-
-      <div class="task-actions d-flex gap-2">
-        <button class="btn btn-sm btn-success" onclick="toggleTask(${task.id})">✔</button>
-        <button class="btn btn-sm btn-warning" onclick="editTask(${task.id})">✏</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">🗑</button>
-      </div>
+    const header = document.createElement("li");
+    header.className = "group-header";
+    header.innerHTML = `
+      <span class="priority-icon priority-${priority.value}" aria-hidden="true"><i></i><i></i><i></i></span>
+      ${priority.label}
+      <span class="group-count">${group.length}</span>
     `;
+    taskList.appendChild(header);
 
-    taskList.appendChild(li);
+    group.forEach((task) => {
+      const li = document.createElement("li");
+      li.className = `task-item priority-${task.priority} ${task.completed ? "completed" : ""}`;
+
+      li.innerHTML = `
+        <button class="task-check" onclick="toggleTask(${task.id})" aria-label="Mark as ${task.completed ? "active" : "done"}">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+        </button>
+
+        <span class="task-text">${task.text}</span>
+
+        <div class="task-actions">
+          <button class="icon-btn" onclick="editTask(${task.id})" aria-label="Edit task">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3a2.8 2.8 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /></svg>
+          </button>
+          <button class="icon-btn icon-btn-danger" onclick="deleteTask(${task.id})" aria-label="Delete task">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+          </button>
+        </div>
+      `;
+
+      taskList.appendChild(li);
+    });
   });
 }
+
+// STATS: sidebar counters + progress bar
+function updateStats() {
+  const total = tasks.length;
+  const done = tasks.filter((t) => t.completed).length;
+  const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+
+  countAll.textContent = total;
+  countActive.textContent = total - done;
+  countCompleted.textContent = done;
+
+  progressFill.style.width = `${percent}%`;
+  progressPercent.textContent = `${percent}%`;
+  progressLabel.textContent =
+    total === 0 ? "No tasks yet" : `${done} of ${total} tasks done`;
+}
+
+// KEYBOARD SHORTCUTS: "N" = new task, "/" = search, "Esc" = leave the field
+document.addEventListener("keydown", (e) => {
+  const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName);
+
+  if (e.key === "Escape" && typing) {
+    document.activeElement.blur();
+    return;
+  }
+
+  if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+
+  if (e.key === "n" || e.key === "N") {
+    e.preventDefault();
+    taskInput.focus();
+  }
+
+  if (e.key === "/") {
+    e.preventDefault();
+    searchInput.focus();
+  }
+});
