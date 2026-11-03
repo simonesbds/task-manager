@@ -45,6 +45,7 @@ task-manager/
 ├── global.css    # design tokens, light/dark themes, components
 ├── app.js        # state, CRUD, rendering, stats, shortcuts
 ├── image.png     # preview
+├── favicon.ico, favicon-32x32.png, apple-touch-icon.png
 ├── LICENSE
 └── README.md
 ```
