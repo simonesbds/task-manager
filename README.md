@@ -1,63 +1,71 @@
 # Task Manager
 
-Una web app per la gestione dei task in stile **scrivania digitale**, sviluppata in **HTML, Bootstrap 5 e JavaScript Vanilla**.
+A task management web app with a **digital desk** look, built with **HTML, Bootstrap 5 and vanilla JavaScript**.
 
-L’app consente di creare, modificare, filtrare e salvare i task localmente, con supporto a **dark mode**, **UI responsive** e **modals Bootstrap** per una migliore user experience.
+The app lets you create, edit, filter and save tasks locally, with support for **dark mode**, a **responsive UI** and **Bootstrap modals** for a smoother user experience.
 
-# Live website
+## Live website
 https://simonesbds.github.io/task-manager/
 
 ---
 
 ## Features
 
-- Creazione task (CRUD)
-- Modifica task tramite modal Bootstrap
-- Eliminazione task con conferma modal
-- Completamento task
-- Ricerca testuale
-- Filtri: Tutti / Attivi / Completati
-- Priorità (Bassa / Media / Alta)
-- Dark Mode persistente
-- Salvataggio dati in localStorage
-- Responsive (mobile-first con Bootstrap)
-- UI professionale con tema arancione
+- Create tasks
+- Edit tasks through a Bootstrap modal
+- Delete tasks with a confirmation modal
+- Mark tasks as completed
+- Text search
+- Filters: All / Active / Completed
+- Priority levels (Low / Medium / High)
+- Persistent dark mode
+- Data saved in localStorage
+- Responsive, mobile-first layout (Bootstrap)
+- Custom orange theme
 
 ---
 
-## Tecnologie
+## Tech Stack
 
 - HTML5
 - CSS3
 - Bootstrap 5
-- JavaScript (Vanilla)
+- JavaScript (vanilla)
 - LocalStorage API
 
 ---
 
-## Struttura del progetto
+## Project Structure
 
 ```
 task-manager/
 ├── index.html
 ├── global.css
 ├── app.js
+├── image.png
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-## Concetti JavaScript utilizzati
+## JavaScript Concepts Used
 
-- Manipolazione DOM
+- DOM manipulation
 - Event handling
-- Array methods (`map`, `filter`, `find`)
-- Gestione stato applicativo
+- Array methods (`filter`, `find`, `forEach`)
+- Application state management
 - LocalStorage
 - Template literals
 - Conditional rendering
-- Bootstrap Modals via JavaScript
+- Bootstrap modals via JavaScript
 
 ---
 
 ![Preview](image.png)
+
+---
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
